@@ -11,7 +11,22 @@
 (keymap-global-set "C-s d" #'scroll-up-line)
 (keymap-global-set "C-s u" #'scroll-down-line)
 (keymap-global-set "C-c C-y" #'duplicate-line)
-;; C-S-backspace == 'kill-whole-line
+
+(defun wt/copy-line-or-region ()
+  (interactive)
+  (if (region-active-p)
+      (kill-ring-save (region-beginning) (region-end))
+    (save-excursion
+      (kill-ring-save (line-beginning-position) (line-end-position)))))
+(keymap-global-set "M-w" #'wt/copy-line-or-region)
+
+;; BUILTIN: C-S-backspace == 'kill-whole-line
+(defun wt/kill-line-or-region ()
+  (interactive)
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (kill-whole-line)))
+(keymap-global-set "C-w" #'wt/kill-line-or-region)
 
 (use-package editorconfig
   :ensure t
@@ -154,22 +169,23 @@
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  (corfu-quit-no-match t)      ;; Never quit, even if there is no match
+  (corfu-quit-no-match t)
   (corfu-preview-current nil)    ;; Disable current candidate preview
-  (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
+  (corfu-preselect 'prompt)      ;; Preselect the prompt(don't preselect any completions)
+  (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
   (corfu-preview-current nil)
 
   (corfu-auto t)
   (corfu-auto-delay 0)
   (corfu-auto-prefix 1)
-  (corfu-quit-no-match 'separator)
-  (corfu-popupinfo-mode)
   (corfu-popupinfo-delay 0)
 
   ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
   :hook (prog-mode . corfu-mode)
-  
+  :bind (:map corfu-map
+              ("M-p" . corfu-popupinfo-scroll-down)
+              ("M-n" . corfu-popupinfo-scroll-up)
+              ("M-d" . corfu-popupinfo-toggle))
   :init
 
   ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
@@ -178,6 +194,7 @@
   ;; (global-corfu-mode)
 
   ;; Enable optional extension modes:
+  (corfu-popupinfo-mode)
   (corfu-history-mode))
 
 (use-package eglot
@@ -194,7 +211,7 @@
                      (if (eq system-type 'windows-nt)
                          "basedpyright-langserver.CMD"
                        "basedpyright-langserver")
-                     "--stdio")) ;; There still exists some problems with python lsp here.
+                     "--stdio"))
   (add-to-list 'eglot-server-programs
                '((c-mode c++-mode c-ts-mode c++-ts-mode)
                  . ("clangd" "--background-index" "--clang-tidy"))))
@@ -205,7 +222,6 @@
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer)
   (require 'eaf-image-viewer)
-  (require 'eaf-git)
   (require 'eaf-file-sender)
   (require 'eaf-airshare)
   (require 'eaf-file-browser)

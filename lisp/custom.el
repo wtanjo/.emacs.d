@@ -3,11 +3,12 @@
 (scroll-bar-mode -1)
 (setq inhibit-startup-message t)
 (global-hl-line-mode 1)
-(setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
+(setq-default display-line-numbers-width-start t)
+(setq display-line-numbers-type 'relative)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))      ;; 启动时全屏
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))    ;; 编程模式中禁止折行
-(global-set-key (kbd "C-c z") 'toggle-truncate-lines)             ;; C-c [a-z] 为官方规定用户自定义键位保留区
+(keymap-global-set "C-c z" #'toggle-truncate-lines)               ;; C-c [a-z] 为官方规定用户自定义键位保留区
 (setq scroll-margin 1
       scroll-step 1
       hscroll-margin 2
@@ -16,7 +17,7 @@
       scroll-preserve-screen-position t)
 
 (set-frame-font (font-spec :family "Iosevka" :size 45))
-(set-fontset-font t 'unicode (font-spec :family "Segoe UI Emoji"))
+(set-fontset-font t 'unicode (font-spec :family "Segoe UI Emoji" :size 45))
 (set-fontset-font t 'han (font-spec :family "华文行楷" :size 45))
 (set-fontset-font t 'kana (font-spec :family "HGGyoshotai" :size 45))
 
@@ -82,8 +83,7 @@
 (column-number-mode 1)
 (size-indication-mode 1)
 (display-battery-mode 1)
-(setq-default mode-line-mule-info 
-              '(""  mode-line-coding-system-indicator))
+
 
 
 

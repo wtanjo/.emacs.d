@@ -13,6 +13,6 @@
 (repeat-mode t)                          ; 开启后重复命令可以只输一次前缀
 (set-fringe-mode '(16 . 8))
 
-(global-set-key (kbd "RET") 'newline-and-indent)
+(keymap-global-set "RET" #'newline-and-indent)
 
 (provide 'basics)
