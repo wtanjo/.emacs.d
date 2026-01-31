@@ -1,31 +1,44 @@
 (keymap-global-set "C-z" nil)
 (keymap-global-set "C-s" nil)
 
+(defun wt/duplicate-line (n)
+  "duplicate-line and next-line"
+  (interactive "p")
+  (unless n
+    (setq n 1))
+  (duplicate-line n)
+  (next-line n))
+
 (defvar-keymap repeatable
   :doc "repeatable keymaps"
   :repeat t
   "d" #'scroll-up-line
-  "u" #'scroll-down-line
-  "C-y" #'duplicate-line)
-
+  "u" #'scroll-down-line)
 (keymap-global-set "C-s d" #'scroll-up-line)
 (keymap-global-set "C-s u" #'scroll-down-line)
-(keymap-global-set "C-c C-y" #'duplicate-line)
+(keymap-global-set "C-," #'wt/duplicate-line)
 
-(defun wt/copy-line-or-region ()
-  (interactive)
+(defun wt/copy-line-or-region (n)
+  (interactive "p")
+  (unless n
+    (setq n 1))
   (if (region-active-p)
       (kill-ring-save (region-beginning) (region-end))
     (save-excursion
-      (kill-ring-save (line-beginning-position) (line-end-position)))))
+      (let ((beg (line-beginning-position))
+            (end (line-beginning-position (+ n 1))))
+        (copy-region-as-kill beg end)))))
 (keymap-global-set "M-w" #'wt/copy-line-or-region)
 
 ;; BUILTIN: C-S-backspace == 'kill-whole-line
-(defun wt/kill-line-or-region ()
-  (interactive)
+(defun wt/kill-line-or-region (n)
+  (interactive "p")
+  (unless n
+    (setq n 1))
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
-    (kill-whole-line)))
+    (kill-whole-line n)
+    (previous-line n)))
 (keymap-global-set "C-w" #'wt/kill-line-or-region)
 
 (use-package editorconfig

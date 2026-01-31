@@ -38,7 +38,7 @@
 
 (with-eval-after-load 'vertico
   (set-face-attribute 'vertico-current nil 
-                      :background 'unspecified
+                      :background "#242730"
                       :foreground 'unspecified
                       :weight 'bold))
 
