@@ -18,8 +18,8 @@
 
 (set-frame-font (font-spec :family "Iosevka" :size 45))
 (set-fontset-font t 'unicode (font-spec :family "Segoe UI Emoji" :size 45))
-(set-fontset-font t 'han (font-spec :family "华文行楷" :size 45))
-(set-fontset-font t 'kana (font-spec :family "HGGyoshotai" :size 45))
+(set-fontset-font t 'han (font-spec :family "LXGW Wenkai Mono" :size 45))
+(set-fontset-font t 'kana (font-spec :family "UD Digi Kyokasho N" :size 45))
 
 (use-package catppuccin-theme
   :ensure t
@@ -59,17 +59,20 @@
                                     dashboard-insert-footer))
 
   (setq dashboard-navigator-buttons
-      `((("1" "NA II" "Open" (lambda (&rest _) (dired "E:/DS/Numerical Algorithm II")))
-         ("2" "DB" "Open" (lambda (&rest _) (dired "E:/DS/Database")))
-         ("3" "Config" "Open Emacs Config" (lambda (&rest _) (dired "~/.emacs.d"))))))
-  (setq dashboard-items '((recents   . 20)
-			              (projects  . 10)
-			              (agenda    . 10) ;; org-agenda
+        `(;; The first line
+          ((nil "NA II" "Numerical Algorithm II" (lambda (&rest _) (dired "E:/DS/Numerical Algorithm II")))
+           (nil "DB" "Database" (lambda (&rest _) (dired "E:/DS/Database"))))
+          
+          ;; The last line
+          ((nil "Config" "Open Emacs Config" (lambda (&rest _) (dired "~/.emacs.d"))))))
+  (setq dashboard-items '((recents   . 30)
+                          (projects  . 10)
+                          (agenda    . 10) ;; org-agenda
                           (bookmarks . 5)
                           (registers . 5)))
   (setq dashboard-item-shortcuts '((recents   . "r")
-				                   (projects  . "p")
-				                   (agenda    . "a")
+                                   (projects  . "p")
+                                   (agenda    . "a")
                                    (bookmarks . "m")                                  
                                    (registers . "e")))
   (setq dashboard-center-content t)

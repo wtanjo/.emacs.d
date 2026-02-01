@@ -1,6 +1,28 @@
 (keymap-global-set "C-z" nil)
 (keymap-global-set "C-s" nil)
 
+(keymap-global-set "C-c c" #'compile)
+(setq-default compile-command "")
+(defun wt/python-compile-setup ()
+  (setq-local compile-command (format "python3 %s" (shell-quote-argument (buffer-file-name)))))
+(add-hook 'python-base-mode-hook #'wt/python-compile-setup)
+
+(defun wt/c-compile-setup ()
+  (setq-local compile-command (format "clang %s -o %s && ./%s" 
+                                      (buffer-file-name)
+                                      (file-name-sans-extension (buffer-file-name))
+                                      (file-name-sans-extension (buffer-file-name)))))
+(add-hook 'c-mode-hook #'wt/c-compile-setup)
+(add-hook 'c-ts-mode-hook #'wt/c-compile-setup)
+
+(defun wt/c++-compile-setup ()
+  (setq-local compile-command (format "clang++ %s -o %s && ./%s" 
+                                      (buffer-file-name)
+                                      (file-name-sans-extension (buffer-file-name))
+                                      (file-name-sans-extension (buffer-file-name)))))
+(add-hook 'c++-mode-hook #'wt/c++-compile-setup)
+(add-hook 'c++-ts-mode-hook #'wt/c++-compile-setup)
+
 (defun wt/duplicate-line (n)
   "duplicate-line and next-line"
   (interactive "p")
