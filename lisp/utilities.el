@@ -1,10 +1,12 @@
 (keymap-global-set "C-z" nil)
 (keymap-global-set "C-s" nil)
 
+(keymap-global-set "C-c f" #'find-file-at-point)
+
 (keymap-global-set "C-c c" #'compile)
 (setq-default compile-command "")
 (defun wt/python-compile-setup ()
-  (setq-local compile-command (format "python3 %s" (shell-quote-argument (buffer-file-name)))))
+  (setq-local compile-command (format "./.venv/Scripts/activate && python3 %s" (shell-quote-argument (buffer-file-name)))))
 (add-hook 'python-base-mode-hook #'wt/python-compile-setup)
 
 (defun wt/c-compile-setup ()
@@ -172,8 +174,8 @@
   :ensure t
   :config
   (global-diff-hl-mode)
-  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
 
 (use-package treesit
   :when (and (fboundp 'treesit-available-p)

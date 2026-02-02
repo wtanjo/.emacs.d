@@ -8,6 +8,9 @@
 (setq display-line-numbers-type 'relative)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))      ;; 启动时全屏
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))    ;; 编程模式中禁止折行
+(add-hook 'org-mode-hook #'visual-line-mode)
+(add-hook 'markdown-mode-hook #'visual-line-mode)
+(global-goto-address-mode 1)
 (keymap-global-set "C-c z" #'toggle-truncate-lines)               ;; C-c [a-z] 为官方规定用户自定义键位保留区
 (setq scroll-margin 1
       scroll-step 1
@@ -42,41 +45,36 @@
                       :foreground 'unspecified
                       :weight 'bold))
 
-(use-package dashboard
+(use-package enlight
   :ensure t
-  :config
-  (setq dashboard-banner-logo-title "In solitude, where we are least alone.")
-  (setq dashboard-startup-banner 'official) ;; 也可以自定义图片
-  (setq dashboard-startupify-list '(dashboard-insert-banner
-                                    dashboard-insert-newline
-                                    dashboard-insert-banner-title
-                                    dashboard-insert-newline
-                                    dashboard-insert-navigator
-                                    dashboard-insert-newline
-                                    dashboard-insert-init-info
-                                    dashboard-insert-items
-                                    dashboard-insert-newline
-                                    dashboard-insert-footer))
+  :custom
+  (enlight-content
+   (concat
+    (propertize "Emacs" 'face '(:family "Lucida Handwriting Italic" :height 1.5))
 
-  (setq dashboard-navigator-buttons
-        `(;; The first line
-          ((nil "NA II" "Numerical Algorithm II" (lambda (&rest _) (dired "E:/DS/Numerical Algorithm II")))
-           (nil "DB" "Database" (lambda (&rest _) (dired "E:/DS/Database"))))
-          
-          ;; The last line
-          ((nil "Config" "Open Emacs Config" (lambda (&rest _) (dired "~/.emacs.d"))))))
-  (setq dashboard-items '((recents   . 30)
-                          (projects  . 10)
-                          (agenda    . 10) ;; org-agenda
-                          (bookmarks . 5)
-                          (registers . 5)))
-  (setq dashboard-item-shortcuts '((recents   . "r")
-                                   (projects  . "p")
-                                   (agenda    . "a")
-                                   (bookmarks . "m")                                  
-                                   (registers . "e")))
-  (setq dashboard-center-content t)
-  (dashboard-setup-startup-hook))
+    "\n\n\n\n"
+
+    (enlight-menu
+     '(("Org Mode"
+	    ("Org-Agenda" (org-agenda nil "a") "a"))
+       ("Courses"
+        ("Numerical Algorithm II" (dired "e:/DS/Numerical Algorithm II") "n")
+        ("Database" (dired "e:/DS/Database") "d"))
+       ("Disks"
+        ("C:/" (dired "c:/") "C")
+        ("D:/" (dired "d:/") "D")
+        ("E:/" (dired "e:/") "E"))
+       ("Config"
+        ("Emacs Config" (dired "~/.emacs.d") "c"))
+       ("Others"
+	    ("Projects" project-switch-project "p"))))))
+  
+  :config
+  (add-hook 'enlight-mode-hook (lambda ()
+                                 (display-line-numbers-mode -1)
+                                 ;; (setq-local global-hl-line-mode nil)
+                                 (hl-line-mode)))
+  (setopt initial-buffer-choice #'enlight))
 
 (use-package rainbow-delimiters
  :ensure t
@@ -106,8 +104,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(catppuccin-theme consult corfu dashboard diff-hl drag-stuff magit
-                      multiple-cursors orderless
+   '(catppuccin-theme consult corfu diff-hl drag-stuff enlight
+                      magit multiple-cursors orderless
                       rainbow-delimiters vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
