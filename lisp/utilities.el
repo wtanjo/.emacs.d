@@ -1,15 +1,17 @@
 (keymap-global-set "C-z" nil)
 (keymap-global-set "C-s" nil)
-
-(keymap-global-set "C-c f" #'find-file-at-point)
+(bind-key* "C-c C-f" #'ignore)
+(keymap-global-set "C-x C-f" #'find-file-at-point)
 
 (keymap-global-set "C-c c" #'compile)
 (setq-default compile-command "")
 (defun wt/python-compile-setup ()
+  "compile setup for python"
   (setq-local compile-command (format "./.venv/Scripts/activate && python3 %s" (shell-quote-argument (buffer-file-name)))))
 (add-hook 'python-base-mode-hook #'wt/python-compile-setup)
 
 (defun wt/c-compile-setup ()
+  "compile setup for c"
   (setq-local compile-command (format "clang %s -o %s && ./%s" 
                                       (buffer-file-name)
                                       (file-name-sans-extension (buffer-file-name))
@@ -18,6 +20,7 @@
 (add-hook 'c-ts-mode-hook #'wt/c-compile-setup)
 
 (defun wt/c++-compile-setup ()
+  "compile setup for c++"
   (setq-local compile-command (format "clang++ %s -o %s && ./%s" 
                                       (buffer-file-name)
                                       (file-name-sans-extension (buffer-file-name))
@@ -26,7 +29,7 @@
 (add-hook 'c++-ts-mode-hook #'wt/c++-compile-setup)
 
 (defun wt/duplicate-line (n)
-  "duplicate-line and next-line"
+  "duplicate-line and go next line"
   (interactive "p")
   (unless n
     (setq n 1))

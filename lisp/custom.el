@@ -72,8 +72,8 @@
   :config
   (add-hook 'enlight-mode-hook (lambda ()
                                  (display-line-numbers-mode -1)
-                                 ;; (setq-local global-hl-line-mode nil)
-                                 (hl-line-mode)))
+                                 (setq-local global-hl-line-mode nil)
+                                 (hl-line-mode -1)))
   (setopt initial-buffer-choice #'enlight))
 
 (use-package rainbow-delimiters
