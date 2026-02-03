@@ -7,27 +7,48 @@
 (setq-default compile-command "")
 (defun wt/python-compile-setup ()
   "compile setup for python"
-  (setq-local compile-command (format "./.venv/Scripts/activate && python3 %s" (shell-quote-argument (buffer-file-name)))))
+  (setq-local compile-command (format "./.venv/Scripts/activate && python3 %s"
+                                      (shell-quote-argument (buffer-file-name)))))
 (add-hook 'python-base-mode-hook #'wt/python-compile-setup)
 
 (defun wt/c-compile-setup ()
   "compile setup for c"
-  (setq-local compile-command (format "clang %s -o %s && ./%s" 
-                                      (buffer-file-name)
-                                      (file-name-sans-extension (buffer-file-name))
-                                      (file-name-sans-extension (buffer-file-name)))))
+  (setq-local compile-command (format "clang %s -o %s && %s" 
+                                      (shell-quote-argument (buffer-file-name))
+                                      (shell-quote-argument
+                                       (concat
+                                        (file-name-sans-extension (buffer-file-name))
+                                        ".exe"))
+                                      (shell-quote-argument
+                                       (concat
+                                        (file-name-sans-extension (buffer-file-name))
+                                        ".exe")))))
 (add-hook 'c-mode-hook #'wt/c-compile-setup)
 (add-hook 'c-ts-mode-hook #'wt/c-compile-setup)
 
 (defun wt/c++-compile-setup ()
   "compile setup for c++"
-  (setq-local compile-command (format "clang++ %s -o %s && ./%s" 
-                                      (buffer-file-name)
-                                      (file-name-sans-extension (buffer-file-name))
-                                      (file-name-sans-extension (buffer-file-name)))))
+  (setq-local compile-command (format "clang++ %s -o %s && %s" 
+                                      (shell-quote-argument (buffer-file-name))
+                                      (shell-quote-argument
+                                       (concat
+                                        (file-name-sans-extension (buffer-file-name))
+                                        ".exe"))
+                                      (shell-quote-argument
+                                       (concat
+                                        (file-name-sans-extension (buffer-file-name))
+                                        ".exe")))))
 (add-hook 'c++-mode-hook #'wt/c++-compile-setup)
 (add-hook 'c++-ts-mode-hook #'wt/c++-compile-setup)
 
+(add-hook 'lisp-mode-hook (lambda ()
+                            (setq-local compile-command
+                                        (format "sbcl --script %s"
+                                                (shell-quote-argument (buffer-file-name))))))
+(add-hook 'sly-mode-hook (lambda ()
+                            (setq-local compile-command
+                                        (format "sbcl --script %s"
+                                                (shell-quote-argument (buffer-file-name))))))
 (defun wt/duplicate-line (n)
   "duplicate-line and go next line"
   (interactive "p")
@@ -156,9 +177,9 @@
   :config
   (setq consult-async-min-input 1)
   :bind
-  (("C-c C-c l" . consult-line)
-   ("C-c C-c f" . consult-fd)
-   ("C-c C-c g" . consult-ripgrep)))
+  (("C-c C-s l" . consult-line)
+   ("C-c C-s f" . consult-fd)
+   ("C-c C-s g" . consult-ripgrep)))
 
 (use-package drag-stuff
   :ensure t
@@ -215,14 +236,13 @@
   (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
   (corfu-preview-current nil)
 
-  (corfu-auto t)
-  (corfu-auto-delay 0)
-  (corfu-auto-prefix 1)
-  (corfu-popupinfo-delay 0)
+  (corfu-auto nil)
+  (corfu-popupinfo-delay 0.0)
 
   ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
   :hook (prog-mode . corfu-mode)
   :bind (:map corfu-map
+              ("C-M-i" . completion-at-point)
               ("M-p" . corfu-popupinfo-scroll-down)
               ("M-n" . corfu-popupinfo-scroll-up)
               ("M-d" . corfu-popupinfo-toggle))
@@ -271,5 +291,10 @@
   :custom
   (eaf-browser-enable-adblocker t)
   (eaf-browser-continue-where-left-off t))
+
+(use-package sly
+  :ensure t
+  :config
+  (setq inferior-lisp-program "sbcl"))
 
 (provide 'utilities)
