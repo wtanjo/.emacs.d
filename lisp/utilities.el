@@ -177,9 +177,9 @@
   :config
   (setq consult-async-min-input 1)
   :bind
-  (("C-c C-s l" . consult-line)
-   ("C-c C-s f" . consult-fd)
-   ("C-c C-s g" . consult-ripgrep)))
+  (("C-c l" . consult-line)
+   ("C-c f" . consult-fd)
+   ("C-c g" . consult-ripgrep)))
 
 (use-package drag-stuff
   :ensure t

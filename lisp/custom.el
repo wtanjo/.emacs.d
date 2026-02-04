@@ -30,6 +30,8 @@
   (catppuccin-set-color 'base "#000000")
   (catppuccin-set-color 'yellow "#ffdd55" 'mocha)
   (catppuccin-set-color 'green "#66bb33" 'mocha)
+  (catppuccin-set-color 'sky "#59ddb9" 'mocha)
+  (catppuccin-set-color 'sapphire "#66aadd" 'mocha)
   (setq catppuccin-flavor 'mocha)
   (load-theme 'catppuccin :no-confirm)
   
