@@ -13,7 +13,7 @@
 
 (defun wt/c-compile-setup ()
   "compile setup for c"
-  (setq-local compile-command (format "clang %s -o %s && %s" 
+  (setq-local compile-command (format "gcc %s -o %s && %s" 
                                       (shell-quote-argument (buffer-file-name))
                                       (shell-quote-argument
                                        (concat
@@ -28,7 +28,7 @@
 
 (defun wt/c++-compile-setup ()
   "compile setup for c++"
-  (setq-local compile-command (format "clang++ %s -o %s && %s" 
+  (setq-local compile-command (format "g++ %s -o %s && %s" 
                                       (shell-quote-argument (buffer-file-name))
                                       (shell-quote-argument
                                        (concat
@@ -265,6 +265,8 @@
          (c-ts-mode . eglot-ensure)
          (c++-mode . eglot-ensure)
          (c++-ts-mode . eglot-ensure))
+  :custom
+  (eglot-ignored-server-capabilities '(:inlayHintProvider))
   :config
   (add-to-list 'eglot-server-programs
                (list '(python-mode python-ts-mode)
@@ -274,23 +276,9 @@
                      "--stdio"))
   (add-to-list 'eglot-server-programs
                '((c-mode c++-mode c-ts-mode c++-ts-mode)
-                 . ("clangd" "--background-index" "--clang-tidy"))))
-
-(use-package eaf
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
-  :config
-  (require 'eaf-browser)
-  (require 'eaf-pdf-viewer)
-  (require 'eaf-image-viewer)
-  (require 'eaf-file-sender)
-  (require 'eaf-airshare)
-  (require 'eaf-file-browser)
-  (require 'eaf-video-player)
-  (require 'eaf-camera)
-  (require 'eaf-2048)
-  :custom
-  (eaf-browser-enable-adblocker t)
-  (eaf-browser-continue-where-left-off t))
+                 . ("clangd" "--background-index" "--clang-tidy")))
+  :bind
+  ("C-c M-f" . eglot-format))
 
 (use-package sly
   :ensure t

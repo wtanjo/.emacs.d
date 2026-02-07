@@ -28,7 +28,7 @@
   :ensure t
   :config
   (catppuccin-set-color 'base "#000000")
-  (catppuccin-set-color 'yellow "#ffdd55" 'mocha)
+  (catppuccin-set-color 'yellow "#ffdd33" 'mocha)
   (catppuccin-set-color 'green "#66bb33" 'mocha)
   (catppuccin-set-color 'sky "#59ddb9" 'mocha)
   (catppuccin-set-color 'sapphire "#66aadd" 'mocha)
@@ -39,7 +39,8 @@
   (set-face-foreground 'font-lock-comment-face "#6272a4")
   (set-face-italic 'font-lock-comment-face t)
   (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground 'unspecified :inherit 'font-lock-comment-face)
-  (set-face-attribute 'region nil :background "#5c3d4a" :foreground 'unspecified :weight 'bold))
+  (set-face-attribute 'region nil :background "#5c3d4a" :foreground 'unspecified :weight 'bold)
+  (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
 
 (with-eval-after-load 'vertico
   (set-face-attribute 'vertico-current nil 
@@ -61,7 +62,8 @@
 	    ("Org-Agenda" (org-agenda nil "a") "a"))
        ("Courses"
         ("Numerical Algorithm II" (dired "e:/DS/Numerical Algorithm II") "n")
-        ("Database" (dired "e:/DS/Database") "d"))
+        ("Database" (dired "e:/DS/Database") "d")
+        ("Japanese" (dired "e:/DS/Japanese") "j"))
        ("Disks"
         ("C:/" (dired "c:/") "C")
         ("D:/" (dired "d:/") "D")
@@ -87,6 +89,7 @@
 (size-indication-mode 1)
 (display-battery-mode 1)
 
+(setq dired-listing-switches "-alh")
 
 
 
@@ -106,9 +109,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(catppuccin-theme consult corfu diff-hl drag-stuff enlight magit
-                      multiple-cursors orderless rainbow-delimiters
-                      sly vertico)))
+   '(catppuccin-theme consult corfu diff-hl drag-stuff enlight
+                      magit multiple-cursors orderless
+                      rainbow-delimiters sly vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

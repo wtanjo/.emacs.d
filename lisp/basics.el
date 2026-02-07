@@ -5,6 +5,7 @@
 
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)      ; 相当于 Vim 里的 expandtab
+(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 (global-font-lock-mode t)                ; 语法高亮
 (electric-pair-mode t)                   ; 自动补全括号
 (show-paren-mode t)                      ; 括号高亮
