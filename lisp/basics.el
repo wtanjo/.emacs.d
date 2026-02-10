@@ -14,6 +14,12 @@
 (repeat-mode t)                          ; 开启后重复命令可以只输一次前缀
 (set-fringe-mode '(16 . 8))
 
+(set-keyboard-coding-system 'utf-8)
+
 (keymap-global-set "RET" #'newline-and-indent)
+
+(when (eq system-type 'windows-nt)
+  (setq explicit-shell-file-name "pwsh.exe")
+  (setq shell-file-name "pwsh.exe"))
 
 (provide 'basics)

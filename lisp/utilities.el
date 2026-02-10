@@ -85,8 +85,17 @@
     (setq n 1))
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
-    (kill-whole-line n)
-    (previous-line n)))
+    (if (not (eq n 1))
+        (kill-whole-line n)
+      (let ((col (- (point) (pos-bol))))
+      (kill-whole-line)
+      (forward-line -1)
+      (catch 'break
+        (dotimes (c col)
+          (forward-char)
+          (when (eq 0 (- (point) (pos-bol)))
+            (forward-char -1)
+            (throw 'break nil))))))))
 (keymap-global-set "C-w" #'wt/kill-line-or-region)
 
 (use-package editorconfig
