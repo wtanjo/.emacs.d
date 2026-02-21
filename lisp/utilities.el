@@ -2,53 +2,37 @@
 (keymap-global-set "C-s" nil)
 (bind-key* "C-c C-f" #'ignore)
 (keymap-global-set "C-x C-f" #'find-file-at-point)
+(keymap-global-set "M-SPC" #'mark-word)
 
 (keymap-global-set "C-c c" #'compile)
 (setq-default compile-command "")
-(defun wt/python-compile-setup ()
-  "compile setup for python"
+(defun wt/python-compile-init ()
+  "compile buffer string initialization for python"
   (setq-local compile-command (format "./.venv/Scripts/activate && python3 %s"
-                                      (shell-quote-argument (buffer-file-name)))))
-(add-hook 'python-base-mode-hook #'wt/python-compile-setup)
+                                      (concat
+                                       (file-name-base) ".py"))))
+(add-hook 'python-base-mode-hook #'wt/python-compile-init)
 
-(defun wt/c-compile-setup ()
-  "compile setup for c"
-  (setq-local compile-command (format "gcc %s -o %s && %s" 
-                                      (shell-quote-argument (buffer-file-name))
-                                      (shell-quote-argument
-                                       (concat
-                                        (file-name-sans-extension (buffer-file-name))
-                                        ".exe"))
-                                      (shell-quote-argument
-                                       (concat
-                                        (file-name-sans-extension (buffer-file-name))
-                                        ".exe")))))
-(add-hook 'c-mode-hook #'wt/c-compile-setup)
-(add-hook 'c-ts-mode-hook #'wt/c-compile-setup)
+(defun wt/c-compile-init ()
+  "compile buffer string initialization for c"
+  (setq-local compile-command (format "gcc %s -o %s && ./%s"
+                                      (concat
+                                       (file-name-base) ".c")
+                                      (file-name-base)
+                                      (file-name-base))))
+(add-hook 'c-mode-hook #'wt/c-compile-init)
+(add-hook 'c-ts-mode-hook #'wt/c-compile-init)
 
-(defun wt/c++-compile-setup ()
-  "compile setup for c++"
-  (setq-local compile-command (format "g++ %s -o %s && %s" 
-                                      (shell-quote-argument (buffer-file-name))
-                                      (shell-quote-argument
-                                       (concat
-                                        (file-name-sans-extension (buffer-file-name))
-                                        ".exe"))
-                                      (shell-quote-argument
-                                       (concat
-                                        (file-name-sans-extension (buffer-file-name))
-                                        ".exe")))))
-(add-hook 'c++-mode-hook #'wt/c++-compile-setup)
-(add-hook 'c++-ts-mode-hook #'wt/c++-compile-setup)
+(defun wt/c++-compile-init ()
+  "compile buffer string initialization for c++"
+  (setq-local compile-command (format "g++ %s -o %s && ./%s"
+                                      (concat
+                                       (file-name-base) ".cpp")
+                                      (file-name-base)
+                                      (file-name-base))))
+(add-hook 'c++-mode-hook #'wt/c++-compile-init)
+(add-hook 'c++-ts-mode-hook #'wt/c++-compile-init)
 
-(add-hook 'lisp-mode-hook (lambda ()
-                            (setq-local compile-command
-                                        (format "sbcl --script %s"
-                                                (shell-quote-argument (buffer-file-name))))))
-(add-hook 'sly-mode-hook (lambda ()
-                            (setq-local compile-command
-                                        (format "sbcl --script %s"
-                                                (shell-quote-argument (buffer-file-name))))))
 (defun wt/duplicate-line (n)
   "duplicate-line and go next line"
   (interactive "p")
@@ -231,7 +215,8 @@
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
      (json "https://github.com/tree-sitter/tree-sitter-json")))
   :mode
-  (("\\.rs\\'" . rust-ts-mode)))
+  (("\\.rs\\'" . rust-ts-mode)
+   ("\\.ts\\'" . typescript-ts-mode)))
 
 (use-package corfu
   :ensure t
@@ -268,8 +253,7 @@
 
 (use-package eglot
   :ensure t
-  :hook ((python-mode . eglot-ensure)
-         (python-ts-mode . eglot-ensure)
+  :hook ((python-base-mode . eglot-ensure)
          (c-mode . eglot-ensure)
          (c-ts-mode . eglot-ensure)
          (c++-mode . eglot-ensure)
@@ -278,20 +262,15 @@
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
   :config
   (add-to-list 'eglot-server-programs
-               (list '(python-mode python-ts-mode)
-                     (if (eq system-type 'windows-nt)
-                         "basedpyright-langserver.CMD"
-                       "basedpyright-langserver")
-                     "--stdio"))
+               '(python-base-mode
+                 . ("basedpyright-langserver" "--stdio")))
   (add-to-list 'eglot-server-programs
                '((c-mode c++-mode c-ts-mode c++-ts-mode)
                  . ("clangd" "--background-index" "--clang-tidy")))
   :bind
   ("C-c M-f" . eglot-format))
 
-(use-package sly
-  :ensure t
-  :config
-  (setq inferior-lisp-program "sbcl"))
+(use-package scala-mode
+  :ensure t)
 
 (provide 'utilities)

@@ -16,8 +16,9 @@
 (eval-when-compile
   (require 'use-package))
 
-(setq custom-file "custom.el")
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
 (require 'basics)
+(require 'facade)
 (require 'utilities)

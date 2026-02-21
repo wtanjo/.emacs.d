@@ -19,10 +19,10 @@
       auto-window-vscroll nil
       scroll-preserve-screen-position t)
 
-(set-frame-font (font-spec :family "Iosevka" :size 45))
-(set-fontset-font t 'unicode (font-spec :family "Segoe UI Emoji" :size 45))
-(set-fontset-font t 'han (font-spec :family "LXGW Wenkai Mono" :size 45))
-(set-fontset-font t 'kana (font-spec :family "UD Digi Kyokasho N" :size 45))
+(set-frame-font (font-spec :family "Iosevka" :size 25))
+(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 25))
+(set-fontset-font t 'han (font-spec :family "LXGW Wenkai Mono" :size 25))
+;; (set-fontset-font t 'kana (font-spec :family "UD Digi Kyokasho N" :size 24))
 
 (use-package catppuccin-theme
   :ensure t
@@ -36,6 +36,7 @@
   (load-theme 'catppuccin :no-confirm)
   
   (set-face-background 'hl-line "#242730")
+  (set-face-background 'cursor "#c2ad98")
   (set-face-foreground 'font-lock-comment-face "#6272a4")
   (set-face-italic 'font-lock-comment-face t)
   (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground 'unspecified :inherit 'font-lock-comment-face)
@@ -53,25 +54,22 @@
   :custom
   (enlight-content
    (concat
-    (propertize "Emacs" 'face '(:family "Lucida Handwriting Italic" :height 1.5))
+    (propertize "Emacs" 'face '(:family "Dancing Script" :height 3.0 :weight 'bold))
 
-    "\n\n\n\n"
+    "\n\n\n"
 
     (enlight-menu
      '(("Org Mode"
 	    ("Org-Agenda" (org-agenda nil "a") "a"))
-       ("Courses"
-        ("Numerical Algorithm II" (dired "e:/DS/Numerical Algorithm II") "n")
-        ("Database" (dired "e:/DS/Database") "d")
-        ("Japanese" (dired "e:/DS/Japanese") "j"))
-       ("Disks"
-        ("C:/" (dired "c:/") "C")
-        ("D:/" (dired "d:/") "D")
-        ("E:/" (dired "e:/") "E"))
+       ("Reservation"
+        ("Reservation" (dired "~/reservation") "r")
+        ("DS" (dired "~/reservation/DS") "d")
+        ("programming" (dired "~/reservation/programming") "p"))
        ("Config"
-        ("Emacs Config" (dired "~/.emacs.d") "c"))
+        ("System Config" (dired "~/.config") "s")
+        ("Emacs Config" (dired "~/.emacs.d") "e"))
        ("Others"
-	    ("Projects" project-switch-project "p"))))))
+	    ("Projects" project-switch-project "P"))))))
   
   :config
   (add-hook 'enlight-mode-hook (lambda ()
@@ -91,30 +89,4 @@
 
 (setq dired-listing-switches "-alh")
 
-
-
-
-
-
-
-
-
-
-
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(catppuccin-theme consult corfu diff-hl drag-stuff enlight magit
-                      multiple-cursors orderless rainbow-delimiters
-                      sly vertico)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(provide 'facade)
