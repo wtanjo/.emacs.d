@@ -64,6 +64,7 @@
        ("Reservation"
         ("Reservation" (dired "~/reservation") "r")
         ("DS" (dired "~/reservation/DS") "d")
+        ("pages" (dired "~/reservation/pages") "b")
         ("programming" (dired "~/reservation/programming") "p"))
        ("Config"
         ("System Config" (dired "~/.config") "s")
