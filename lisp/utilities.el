@@ -206,14 +206,6 @@
      (conf-toml-mode  . toml-ts-mode)
      (js-json-mode    . json-ts-mode)))
   (setq treesit-font-lock-level 4)
-  (setq treesit-language-source-alist
-   '((c "https://github.com/tree-sitter/tree-sitter-c" "v0.23.6")
-     (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.23.4")
-     (python "https://github.com/tree-sitter/tree-sitter-python" "v0.23.6")
-     (go "https://github.com/tree-sitter/tree-sitter-go" "v0.23.4")
-     (rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.3")
-     (toml "https://github.com/tree-sitter/tree-sitter-toml")
-     (json "https://github.com/tree-sitter/tree-sitter-json")))
   :mode
   (("\\.rs\\'" . rust-ts-mode)
    ("\\.ts\\'" . typescript-ts-mode)))
@@ -263,7 +255,7 @@
   :config
   (add-to-list 'eglot-server-programs
                '(python-base-mode
-                 . ("basedpyright-langserver" "--stdio")))
+                 . ("~/.local/bin/basedpyright-langserver" "--stdio")))
   (add-to-list 'eglot-server-programs
                '((c-mode c++-mode c-ts-mode c++-ts-mode)
                  . ("clangd" "--background-index" "--clang-tidy")))
@@ -271,6 +263,9 @@
   ("C-c M-f" . eglot-format))
 
 (use-package scala-mode
+  :ensure t)
+
+(use-package markdown-mode
   :ensure t)
 
 (provide 'utilities)

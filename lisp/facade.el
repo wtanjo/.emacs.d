@@ -19,10 +19,10 @@
       auto-window-vscroll nil
       scroll-preserve-screen-position t)
 
-(set-frame-font (font-spec :family "Iosevka" :size 25))
-(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 25))
-(set-fontset-font t 'han (font-spec :family "LXGW Wenkai Mono" :size 25))
-;; (set-fontset-font t 'kana (font-spec :family "UD Digi Kyokasho N" :size 24))
+(set-frame-font (font-spec :family "Iosevka" :size 28))
+(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 28))
+(set-fontset-font t 'han (font-spec :family "LXGW WenKai Mono" :size 28))
+(set-fontset-font t 'kana (font-spec :family "Sarasa" :size 28))
 
 (use-package catppuccin-theme
   :ensure t
@@ -61,16 +61,17 @@
     (enlight-menu
      '(("Org Mode"
 	    ("Org-Agenda" (org-agenda nil "a") "a"))
+       ("~"
+        ("~" (dired "~") "~")
+        ("Downloads" (dired "~/Downloads") "d")
+        ("Reservation" (dired "~/reservation") "r"))
        ("Reservation"
-        ("Reservation" (dired "~/reservation") "r")
         ("DS" (dired "~/reservation/DS") "d")
         ("pages" (dired "~/reservation/pages") "b")
         ("programming" (dired "~/reservation/programming") "p"))
        ("Config"
         ("System Config" (dired "~/.config") "s")
-        ("Emacs Config" (dired "~/.emacs.d") "e"))
-       ("Others"
-	    ("Projects" project-switch-project "P"))))))
+        ("Emacs Config" (dired "~/.emacs.d") "e"))))))
   
   :config
   (add-hook 'enlight-mode-hook (lambda ()
