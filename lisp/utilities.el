@@ -6,32 +6,6 @@
 
 (keymap-global-set "C-c c" #'compile)
 (setq-default compile-command "")
-(defun wt/python-compile-init ()
-  "compile buffer string initialization for python"
-  (setq-local compile-command (format "./.venv/Scripts/activate && python3 %s"
-                                      (concat
-                                       (file-name-base) ".py"))))
-(add-hook 'python-base-mode-hook #'wt/python-compile-init)
-
-(defun wt/c-compile-init ()
-  "compile buffer string initialization for c"
-  (setq-local compile-command (format "gcc %s -o %s && ./%s"
-                                      (concat
-                                       (file-name-base) ".c")
-                                      (file-name-base)
-                                      (file-name-base))))
-(add-hook 'c-mode-hook #'wt/c-compile-init)
-(add-hook 'c-ts-mode-hook #'wt/c-compile-init)
-
-(defun wt/c++-compile-init ()
-  "compile buffer string initialization for c++"
-  (setq-local compile-command (format "g++ %s -o %s && ./%s"
-                                      (concat
-                                       (file-name-base) ".cpp")
-                                      (file-name-base)
-                                      (file-name-base))))
-(add-hook 'c++-mode-hook #'wt/c++-compile-init)
-(add-hook 'c++-ts-mode-hook #'wt/c++-compile-init)
 
 (defun wt/duplicate-line (n)
   "duplicate-line and go next line"
@@ -243,29 +217,22 @@
   (corfu-popupinfo-mode)
   (corfu-history-mode))
 
-(use-package eglot
-  :ensure t
-  :hook ((python-base-mode . eglot-ensure)
-         (c-mode . eglot-ensure)
-         (c-ts-mode . eglot-ensure)
-         (c++-mode . eglot-ensure)
-         (c++-ts-mode . eglot-ensure))
-  :custom
-  (eglot-ignored-server-capabilities '(:inlayHintProvider))
-  :config
-  (add-to-list 'eglot-server-programs
-               '(python-base-mode
-                 . ("~/.local/bin/basedpyright-langserver" "--stdio")))
-  (add-to-list 'eglot-server-programs
-               '((c-mode c++-mode c-ts-mode c++-ts-mode)
-                 . ("clangd" "--background-index" "--clang-tidy")))
-  :bind
-  ("C-c M-f" . eglot-format))
-
 (use-package scala-mode
   :ensure t)
 
 (use-package markdown-mode
   :ensure t)
+
+(use-package openwith
+  :ensure t
+  :config
+  (setq openwith-associations '(("\\.pdf\\'" "okular" (file))))
+  (openwith-mode t))
+
+;; 让 Org-mode 使用 xelatex 编译
+(setq org-latex-pdf-process
+      '("latexmk -pdfxe -f -interaction=nonstopmode -output-directory=%o %f"))
+
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 
 (provide 'utilities)

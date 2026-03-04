@@ -1,3 +1,5 @@
+(setq epa-pinentry-mode 'loopback)
+
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e"
@@ -48,19 +50,33 @@
 
   (setq message-send-mail-function 'smtpmail-send-it
         smtpmail-debug-info t)
+  (setq mu4e-compose-format-flowed nil)
 
   :bind (("C-x m" . mu4e)
          :map mu4e-main-mode-map
          ("U" . mu4e-update-mail-and-index)))
 
-(use-package org-msg
+(use-package org-mime
   :ensure t
-  :after mu4e
   :config
-  (setq org-msg-options "html-postamble:nil"
-        org-msg-startup "hidestars"
-        org-msg-greeting-fmt "\nHi %s,\n\n"
-        org-msg-default-alternatives '((html (text desc)) (text)))
-  (org-msg-mode))
+  ;; 1. 设置导出选项：强制使用图片处理公式
+  (setq org-mime-export-options '(:with-latex dvipng :section-numbers nil :with-toc nil))
+  
+  ;; 2. 核心：强制将 CSS 类转为内联 Style (解决居中问题)
+  ;; 2. 暴力修复钩子
+  (add-hook 'org-mime-html-hook
+            (lambda ()
+              (save-excursion
+                (goto-char (point-min))
+                ;; 暴力替换 1：把 org-center 类直接换成内联样式
+                (while (re-search-forward "class=\"org-center\"" nil t)
+                  (replace-match "style=\"text-align: center; margin: 0 auto;\""))
+                
+                ;; 暴力替换 2：处理可能存在的其它居中容器
+                (goto-char (point-min))
+                (while (re-search-forward "<div class=\"outline-text-[0-9]\"" nil t)
+                  (replace-match "<div style=\"text-align: left;\"")) ;; 确保正文不被误伤
+                )))
+  :bind ("C-c M-f" . org-mime-htmlize))
 
 (provide 'email)
