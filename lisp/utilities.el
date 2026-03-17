@@ -168,22 +168,6 @@
   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
 
-(use-package treesit
-  :when (and (fboundp 'treesit-available-p)
-             (treesit-available-p))
-  :config
-  (setq major-mode-remap-alist
-   '((c-mode          . c-ts-mode)
-     (c++-mode        . c++-ts-mode)
-     (python-mode     . python-ts-mode)
-     (go-mode         . go-ts-mode)
-     (conf-toml-mode  . toml-ts-mode)
-     (js-json-mode    . json-ts-mode)))
-  (setq treesit-font-lock-level 4)
-  :mode
-  (("\\.rs\\'" . rust-ts-mode)
-   ("\\.ts\\'" . typescript-ts-mode)))
-
 (use-package corfu
   :ensure t
   ;; Optional customizations
@@ -217,12 +201,6 @@
   (corfu-popupinfo-mode)
   (corfu-history-mode))
 
-(use-package scala-mode
-  :ensure t)
-
-(use-package markdown-mode
-  :ensure t)
-
 (use-package openwith
   :ensure t
   :config
@@ -234,5 +212,13 @@
       '("latexmk -pdfxe -f -interaction=nonstopmode -output-directory=%o %f"))
 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  
+  (setq dabbrev-check-all-buffers t
+        dabbrev-check-other-buffers t))
 
 (provide 'utilities)

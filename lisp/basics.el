@@ -17,6 +17,4 @@
 (set-language-environment "UTF-8")
 (set-keyboard-coding-system 'utf-8)
 
-(keymap-global-set "RET" #'newline-and-indent)
-
 (provide 'basics)
