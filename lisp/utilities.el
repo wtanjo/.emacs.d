@@ -211,7 +211,7 @@
 (setq org-agenda-files '("~/.emacs.d/agenda/"))
 (setq org-latex-pdf-process
       '("latexmk -pdfxe -f -interaction=nonstopmode -output-directory=%o %f"))
-(add-hook 'org-mode-hook (lambda () (keymap-set "C-," #'wt/duplicate-line)))
+(add-hook 'org-mode-hook (lambda () (keymap-set org-mode-map "C-," #'wt/duplicate-line)))
 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 
