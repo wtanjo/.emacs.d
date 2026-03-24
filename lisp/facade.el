@@ -6,18 +6,19 @@
 (global-display-line-numbers-mode 1)
 (setq-default display-line-numbers-width-start t)
 (setq display-line-numbers-type 'relative)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))      ;; 启动时全屏
-(add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))    ;; 编程模式中禁止折行
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
 (add-hook 'org-mode-hook #'visual-line-mode)
 (add-hook 'markdown-mode-hook #'visual-line-mode)
 (global-goto-address-mode 1)
-(keymap-global-set "C-c z" #'toggle-truncate-lines)               ;; C-c [a-z] 为官方规定用户自定义键位保留区
+(keymap-global-set "C-c z" #'toggle-truncate-lines)
 (setq scroll-margin 1
       scroll-step 1
       hscroll-margin 2
       hscroll-step 1
       auto-window-vscroll nil
       scroll-preserve-screen-position t)
+(set-fringe-mode '(16 . 8))
 
 (set-frame-font (font-spec :family "Iosevka" :size 28))
 (set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 28))
@@ -59,11 +60,9 @@
     "\n\n\n"
 
     (enlight-menu
-     '(("Org Mode"
-	    ("Org-Agenda" (org-agenda nil "a") "a"))
-       ("~"
+     '(("~"
         ("~" (dired "~") "~")
-        ("Downloads" (dired "~/Downloads") "d")
+        ("Downloads" (dired "~/Downloads") "D")
         ("Reservation" (dired "~/reservation") "r"))
        ("Reservation"
         ("DS" (dired "~/reservation/DS") "d")
@@ -71,7 +70,11 @@
         ("programming" (dired "~/reservation/programming") "p"))
        ("Config"
         ("System Config" (dired "~/.config") "s")
-        ("Emacs Config" (dired "~/.emacs.d") "e"))))))
+        ("Emacs Config" (dired "~/.emacs.d") "e"))
+       ("Agenda"
+	    ("TODO" (org-agenda nil "t") "t")
+        ("Agenda" (org-agenda nil "a") "a")
+        ("View In File" (dired (car org-agenda-files)) "A"))))))
   
   :config
   (add-hook 'enlight-mode-hook (lambda ()

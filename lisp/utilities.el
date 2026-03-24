@@ -1,6 +1,6 @@
 (keymap-global-set "C-z" nil)
 (keymap-global-set "C-s" nil)
-(bind-key* "C-c C-f" #'ignore)
+(keymap-global-set "C-c C-f" nil)
 (keymap-global-set "C-x C-f" #'find-file-at-point)
 (keymap-global-set "M-SPC" #'mark-word)
 
@@ -25,35 +25,36 @@
 (keymap-global-set "C-," #'wt/duplicate-line)
 
 (defun wt/copy-line-or-region (n)
+  "Copy the exact line without an extra blank line, or copy the region."
   (interactive "p")
   (unless n
     (setq n 1))
   (if (region-active-p)
       (kill-ring-save (region-beginning) (region-end))
-    (save-excursion
-      (let ((beg (line-beginning-position))
-            (end (line-beginning-position (+ n 1))))
-        (copy-region-as-kill beg end)))))
+      (let ((begin (line-beginning-position))
+            (end (- (line-beginning-position (+ n 1)) 1)))
+        (copy-region-as-kill begin end))))
 (keymap-global-set "M-w" #'wt/copy-line-or-region)
 
-;; BUILTIN: C-S-backspace == 'kill-whole-line
 (defun wt/kill-line-or-region (n)
+  "Kill the exact line without the ending LF, which means you can paste it without an extra blank line, or kill the region."
   (interactive "p")
   (unless n
     (setq n 1))
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
-    (if (not (eq n 1))
-        (kill-whole-line n)
-      (let ((col (- (point) (pos-bol))))
-      (kill-whole-line)
-      (forward-line -1)
+    (let ((col (- (point) (pos-bol))))
+      (let ((begin (line-beginning-position))
+            (end (- (line-beginning-position (+ n 1)) 1)))
+        (kill-region begin end)
+        (backward-delete-char-untabify 1 nil))
+      (move-beginning-of-line nil)
       (catch 'break
         (dotimes (c col)
           (forward-char)
           (when (eq 0 (- (point) (pos-bol)))
             (forward-char -1)
-            (throw 'break nil))))))))
+            (throw 'break nil)))))))
 (keymap-global-set "C-w" #'wt/kill-line-or-region)
 
 (use-package editorconfig
@@ -150,8 +151,8 @@
 
 (use-package drag-stuff
   :ensure t
-  :bind (("M-p" . drag-stuff-up)    ; Alt + P 向上移
-         ("M-n" . drag-stuff-down)  ; Alt + N 向下移
+  :bind (("M-p" . drag-stuff-up)
+         ("M-n" . drag-stuff-down)
          ("M-<up>" . drag-stuff-up)
          ("M-<down>" . drag-stuff-down))
   :config
@@ -184,7 +185,7 @@
   (corfu-popupinfo-delay 0.0)
 
   ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
-  :hook (prog-mode . corfu-mode)
+  ;; :hook (prog-mode . corfu-mode)
   :bind (:map corfu-map
               ("C-M-i" . completion-at-point)
               ("M-p" . corfu-popupinfo-scroll-down)
@@ -195,7 +196,7 @@
   ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
   ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
   ;; variable `global-corfu-modes' to exclude certain modes.
-  ;; (global-corfu-mode)
+  (global-corfu-mode)
 
   ;; Enable optional extension modes:
   (corfu-popupinfo-mode)
@@ -207,9 +208,10 @@
   (setq openwith-associations '(("\\.pdf\\'" "okular" (file))))
   (openwith-mode t))
 
-;; 让 Org-mode 使用 xelatex 编译
+(setq org-agenda-files '("~/.emacs.d/agenda/"))
 (setq org-latex-pdf-process
       '("latexmk -pdfxe -f -interaction=nonstopmode -output-directory=%o %f"))
+(add-hook 'org-mode-hook (lambda () (keymap-set "C-," #'wt/duplicate-line)))
 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 
@@ -220,5 +222,7 @@
   
   (setq dabbrev-check-all-buffers t
         dabbrev-check-other-buffers t))
+
+(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 
 (provide 'utilities)

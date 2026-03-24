@@ -20,6 +20,5 @@
 (load custom-file)
 
 (require 'basics)
-(require 'email)
 (require 'facade)
 (require 'utilities)
