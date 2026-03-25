@@ -47,6 +47,8 @@
       (let ((begin (line-beginning-position))
             (end (- (line-beginning-position (+ n 1)) 1)))
         (kill-region begin end)
+        (when (eq begin 1)
+          (forward-line 1))
         (backward-delete-char-untabify 1 nil))
       (move-beginning-of-line nil)
       (catch 'break
