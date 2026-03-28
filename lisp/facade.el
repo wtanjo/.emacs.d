@@ -25,28 +25,33 @@
 (set-fontset-font t 'han (font-spec :family "LXGW WenKai Mono" :size 28))
 (set-fontset-font t 'kana (font-spec :family "Sarasa" :size 28))
 
-(use-package catppuccin-theme
+;; (use-package catppuccin-theme
+;;   :ensure t
+;;   :config
+;;   (catppuccin-set-color 'base "#000000")
+;;   (catppuccin-set-color 'yellow "#ffdd33" 'mocha)
+;;   (catppuccin-set-color 'green "#66bb33" 'mocha)
+;;   (catppuccin-set-color 'sky "#59ddb9" 'mocha)
+;;   (catppuccin-set-color 'sapphire "#66aadd" 'mocha)
+;;   (setq catppuccin-flavor 'mocha)
+;;   (load-theme 'catppuccin :no-confirm)
+;;   
+;;   (set-face-background 'hl-line "#242730")
+;;   (set-face-background 'cursor "#c2ad98")
+;;   (set-face-foreground 'font-lock-comment-face "#6272a4")
+;;   (set-face-italic 'font-lock-comment-face t)
+;;   (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground 'unspecified :inherit 'font-lock-comment-face)
+;;   (set-face-attribute 'region nil :background "#5c3d4a" :foreground 'unspecified :weight 'bold)
+;;   (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
+
+(use-package gruber-darker-theme
   :ensure t
   :config
-  (catppuccin-set-color 'base "#000000")
-  (catppuccin-set-color 'yellow "#ffdd33" 'mocha)
-  (catppuccin-set-color 'green "#66bb33" 'mocha)
-  (catppuccin-set-color 'sky "#59ddb9" 'mocha)
-  (catppuccin-set-color 'sapphire "#66aadd" 'mocha)
-  (setq catppuccin-flavor 'mocha)
-  (load-theme 'catppuccin :no-confirm)
-  
-  (set-face-background 'hl-line "#242730")
-  (set-face-background 'cursor "#c2ad98")
-  (set-face-foreground 'font-lock-comment-face "#6272a4")
-  (set-face-italic 'font-lock-comment-face t)
-  (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground 'unspecified :inherit 'font-lock-comment-face)
-  (set-face-attribute 'region nil :background "#5c3d4a" :foreground 'unspecified :weight 'bold)
-  (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
+  (load-theme 'gruber-darker :no-confirm))
 
 (with-eval-after-load 'vertico
-  (set-face-attribute 'vertico-current nil 
-                      :background "#242730"
+  (set-face-attribute 'vertico-current nil
+                      :background 'unspecified
                       :foreground 'unspecified
                       :weight 'bold))
 
