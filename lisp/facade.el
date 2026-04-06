@@ -47,7 +47,9 @@
 (use-package gruber-darker-theme
   :ensure t
   :config
-  (load-theme 'gruber-darker :no-confirm))
+  (load-theme 'gruber-darker :no-confirm)
+  (set-face-background 'show-paren-match "steelblue4")
+  (set-face-foreground 'shadow "#9d9087"))
 
 (with-eval-after-load 'vertico
   (set-face-attribute 'vertico-current nil

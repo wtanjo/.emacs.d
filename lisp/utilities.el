@@ -1,5 +1,4 @@
 (keymap-global-set "C-z" nil)
-(keymap-global-set "C-s" nil)
 (keymap-global-set "C-c C-f" nil)
 (keymap-global-set "C-x C-f" #'find-file-at-point)
 (keymap-global-set "M-SPC" #'mark-word)
@@ -20,8 +19,8 @@
   :repeat t
   "d" #'scroll-up-line
   "u" #'scroll-down-line)
-(keymap-global-set "C-s d" #'scroll-up-line)
-(keymap-global-set "C-s u" #'scroll-down-line)
+(keymap-global-set "C-c d" #'scroll-up-line)
+(keymap-global-set "C-c u" #'scroll-down-line)
 (keymap-global-set "C-," #'wt/duplicate-line)
 
 (defun wt/copy-line-or-region (n)
@@ -129,6 +128,7 @@
   (vertico-cycle t)
   :init
   (vertico-mode)
+  (vertico-flat-mode 1)
   (vertico-mouse-mode))
 
 (use-package orderless
@@ -147,8 +147,7 @@
   :config
   (setq consult-async-min-input 1)
   :bind
-  (("C-c l" . consult-line)
-   ("C-c f" . consult-fd)
+  (("C-c f" . consult-fd)
    ("C-c g" . consult-ripgrep)))
 
 (use-package drag-stuff
@@ -207,7 +206,10 @@
 (use-package openwith
   :ensure t
   :config
-  (setq openwith-associations '(("\\.pdf\\'" "okular" (file))))
+  (setq openwith-associations '(("\\.pdf\\'" "okular" (file))
+                                ("\\.docx\\'" "libreoffice" (file))
+                                ("\\.xlsx\\'" "libreoffice" (file))
+                                ("\\.pptx\\'" "libreoffice" (file))))
   (openwith-mode t))
 
 (setq org-agenda-files '("~/.emacs.d/agenda/"))
@@ -224,6 +226,12 @@
   
   (setq dabbrev-check-all-buffers t
         dabbrev-check-other-buffers t))
+(add-hook 'octave-mode-hook (lambda ()
+                              (add-to-list 'completion-at-point-functions #'cape-dabbrev)))
+(add-hook 'tex-mode-hook (lambda ()
+                           (add-to-list 'completion-at-point-functions #'cape-tex)))
+(add-hook 'org-mode-hook (lambda ()
+                           (add-to-list 'completion-at-point-functions #'cape-tex)))
 
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 
