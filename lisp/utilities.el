@@ -209,7 +209,10 @@
   (setq openwith-associations '(("\\.pdf\\'" "okular" (file))
                                 ("\\.docx\\'" "libreoffice" (file))
                                 ("\\.xlsx\\'" "libreoffice" (file))
-                                ("\\.pptx\\'" "libreoffice" (file))))
+                                ("\\.pptx\\'" "libreoffice" (file))
+                                ("\\.mp4\\'" "mpv" (file))
+                                ("\\.mkv\\'" "mpv" (file))
+                                ("\\.mp3\\'" "deadbeef" (file))))
   (openwith-mode t))
 
 (setq org-agenda-files '("~/.emacs.d/agenda/"))
@@ -218,6 +221,7 @@
 (add-hook 'org-mode-hook (lambda () (keymap-set org-mode-map "C-," #'wt/duplicate-line)))
 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 
 (use-package cape
   :ensure t

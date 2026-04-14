@@ -68,20 +68,16 @@
 
     (enlight-menu
      '(("~"
-        ("~" (dired "~") "~")
+        ("opt" (dired "~/opt") "o")
         ("Downloads" (dired "~/Downloads") "D")
-        ("Reservation" (dired "~/reservation") "r"))
+        ("reservation" (dired "~/reservation") "r"))
        ("Reservation"
         ("DS" (dired "~/reservation/DS") "d")
         ("pages" (dired "~/reservation/pages") "b")
         ("programming" (dired "~/reservation/programming") "p"))
        ("Config"
         ("System Config" (dired "~/.config") "s")
-        ("Emacs Config" (dired "~/.emacs.d") "e"))
-       ("Agenda"
-	    ("TODO" (org-agenda nil "t") "t")
-        ("Agenda" (org-agenda nil "a") "a")
-        ("View In File" (dired (car org-agenda-files)) "A"))))))
+        ("Emacs Config" (dired "~/.emacs.d") "e"))))))
   
   :config
   (add-hook 'enlight-mode-hook (lambda ()
