@@ -1,5 +1,6 @@
 (keymap-global-set "C-z" nil)
 (keymap-global-set "C-c C-f" nil)
+(keymap-global-set "C-x s" #'save-buffer)
 (keymap-global-set "C-x C-f" #'find-file-at-point)
 (keymap-global-set "M-SPC" #'mark-word)
 
@@ -208,11 +209,15 @@
   :config
   (setq openwith-associations '(("\\.pdf\\'" "okular" (file))
                                 ("\\.docx\\'" "libreoffice" (file))
+                                ("\\.doc\\'" "libreoffice" (file))
                                 ("\\.xlsx\\'" "libreoffice" (file))
                                 ("\\.pptx\\'" "libreoffice" (file))
                                 ("\\.mp4\\'" "mpv" (file))
                                 ("\\.mkv\\'" "mpv" (file))
-                                ("\\.mp3\\'" "deadbeef" (file))))
+                                ("\\.mp3\\'" "deadbeef" (file))
+                                ("\\.ipynb\\'" "jupyter-notebook" (file))
+                                ("\\.svg\\'" "firefox" (file))
+                                ("\\.avif\\'" "firefox" (file))))
   (openwith-mode t))
 
 (setq org-agenda-files '("~/.emacs.d/agenda/"))
