@@ -216,9 +216,9 @@
                                 ("\\.mkv\\'" "mpv" (file))
                                 ("\\.mp3\\'" "deadbeef" (file))
                                 ("\\.ipynb\\'" "jupyter-notebook" (file))
-                                ;; ("\\.svg\\'" "firefox" (file))
-                                ("\\.avif\\'" "firefox" (file))))
-  (openwith-mode t))
+                                ("\\.svg\\'" "firefox" (file))
+                                ("\\.avif\\'" "firefox" (file)))))
+(add-hook 'dired-mode-hook (lambda () (openwith-mode t)))
 
 (setq org-agenda-files '("~/.emacs.d/agenda/"))
 (setq org-latex-pdf-process
