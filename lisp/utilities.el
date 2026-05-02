@@ -215,6 +215,7 @@
                                 ("\\.mp4\\'" "mpv" (file))
                                 ("\\.mkv\\'" "mpv" (file))
                                 ("\\.mp3\\'" "deadbeef" (file))
+                                ("\\.ogg\\'" "deadbeef" (file))
                                 ("\\.svg\\'" "firefox" (file))
                                 ("\\.avif\\'" "firefox" (file)))))
 (add-hook 'dired-mode-hook (lambda () (openwith-mode t)))
