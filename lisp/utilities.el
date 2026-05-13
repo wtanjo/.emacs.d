@@ -232,6 +232,8 @@
   :ensure t
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'tags-completion-at-point-function)
   
   (setq dabbrev-check-all-buffers t
         dabbrev-check-other-buffers t))
