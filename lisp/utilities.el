@@ -37,15 +37,16 @@
 (keymap-global-set "M-w" #'wt/copy-line-or-region)
 
 (defun wt/kill-line-or-region (n)
-  "Kill the exact line without the ending LF, which means you can paste it without an extra blank line, or kill the region."
+  "Kill the exact line without the ending LF, which means you can paste it without an extra blank line, or kill the region.
+This function cannot handle correctly occasions where the cursor is on the last line (where there is no line number)."
   (interactive "p")
   (unless n
     (setq n 1))
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
     (let ((col (- (point) (pos-bol))))
-      (let ((begin (line-beginning-position))
-            (end (- (line-beginning-position (+ n 1)) 1)))
+      (let ((begin (pos-bol))
+            (end (- (pos-bol (+ n 1)) 1)))
         (kill-region begin end)
         (when (eq begin 1)
           (forward-line 1))
