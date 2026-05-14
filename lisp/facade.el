@@ -68,13 +68,16 @@
 
     (enlight-menu
      '(("~"
+        ("~" (dired "~") "~")
+        ("Documents" (dired "~/Documents") "D")
         ("opt" (dired "~/opt") "o")
-        ("Downloads" (dired "~/Downloads") "D")
-        ("reservation" (dired "~/reservation") "r"))
+        ("reservation" (dired "~/reservation") "r")
+        ("tmp" (dired "~/tmp") "t"))
        ("Reservation"
         ("DS" (dired "~/reservation/DS") "d")
-        ("pages" (dired "~/reservation/pages") "b")
-        ("programming" (dired "~/reservation/programming") "p"))
+        ("languages" (dired "~/reservation/languages") "l")
+        ("programming" (dired "~/reservation/programming") "p")
+        ("wtanjo" (dired "~/reservation/wtanjo") "w"))
        ("Config"
         ("System Config" (dired "~/.config") "s")
         ("Emacs Config" (dired "~/.emacs.d") "e"))))))
