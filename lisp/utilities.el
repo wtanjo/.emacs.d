@@ -218,11 +218,9 @@ This function cannot handle correctly occasions where the cursor is on the last 
                                 ("\\.mp4\\'" "mpv" (file))
                                 ("\\.mkv\\'" "mpv" (file))
                                 ("\\.mp3\\'" "deadbeef" (file))
-                                ("\\.ogg\\'" "deadbeef" (file))
-                                ("\\.avif\\'" "firefox" (file)))))
+                                ("\\.ogg\\'" "deadbeef" (file)))))
 (add-hook 'dired-mode-hook (lambda () (openwith-mode t)))
 
-(setq org-agenda-files '("~/.emacs.d/agenda/"))
 (setq org-latex-pdf-process
       '("latexmk -pdfxe -f -interaction=nonstopmode -output-directory=%o %f"))
 (add-hook 'org-mode-hook (lambda () (keymap-set org-mode-map "C-," #'wt/duplicate-line)))
