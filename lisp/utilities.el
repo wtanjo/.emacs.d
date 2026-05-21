@@ -219,7 +219,6 @@ This function cannot handle correctly occasions where the cursor is on the last 
                                 ("\\.mkv\\'" "mpv" (file))
                                 ("\\.mp3\\'" "deadbeef" (file))
                                 ("\\.ogg\\'" "deadbeef" (file))
-                                ("\\.svg\\'" "firefox" (file))
                                 ("\\.avif\\'" "firefox" (file)))))
 (add-hook 'dired-mode-hook (lambda () (openwith-mode t)))
 
@@ -248,5 +247,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
                            (add-to-list 'completion-at-point-functions #'cape-tex)))
 
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
+
+(keymap-global-set "M-s" #'pinyin-isearch-forward)
+(keymap-global-set "M-r" #'pinyin-isearch-backward)
 
 (provide 'utilities)
