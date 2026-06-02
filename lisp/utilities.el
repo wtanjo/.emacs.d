@@ -255,4 +255,16 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (keymap-global-set "M-s" #'pinyin-isearch-forward)
 (keymap-global-set "M-r" #'pinyin-isearch-backward)
 
+(defun wt/dired-st-open ()
+  "Open the current directory in dired-mode with st."
+  (interactive)
+  (let ((dir (expand-file-name default-directory)))
+    (if (file-remote-p dir)
+        (message "Tramp-mode is currently not supported for opening externally.")
+      (let ((default-directory dir))
+        (start-process "terminal" nil "st")))))
+
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-c o") #'wt/dired-st-open))
+
 (provide 'utilities)
