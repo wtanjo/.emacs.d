@@ -21,7 +21,7 @@
 (set-fringe-mode '(16 . 8))
 
 (set-frame-font (font-spec :family "Iosevka" :size 28))
-(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 28))
+(set-fontset-font t 'unicode (font-spec :family "Twemoji Mozilla" :size 28))
 (set-fontset-font t 'han (font-spec :family "LXGW WenKai Mono" :size 28))
 (set-fontset-font t 'kana (font-spec :family "Sarasa" :size 28))
 
