@@ -218,7 +218,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
                                 ("\\.mp4\\'" "mpv" (file))
                                 ("\\.mkv\\'" "mpv" (file))
                                 ("\\.mp3\\'" "deadbeef" (file))
-                                ("\\.ogg\\'" "deadbeef" (file)))))
+                                ("\\.ogg\\'" "deadbeef" (file))
+                                ("\\.ff\\'" "lel" (file)))))
 (add-hook 'dired-mode-hook (lambda () (openwith-mode t)))
 
 (setq org-latex-pdf-process
