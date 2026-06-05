@@ -210,7 +210,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (use-package openwith
   :ensure t
   :config
-  (setq openwith-associations '(("\\.pdf\\'" "okular" (file))
+  (setq openwith-associations '(("\\.pdf\\'" "zathura" (file))
                                 ("\\.docx\\'" "libreoffice" (file))
                                 ("\\.doc\\'" "libreoffice" (file))
                                 ("\\.xlsx\\'" "libreoffice" (file))
