@@ -268,4 +268,6 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "C-c o") #'wt/dired-st-open))
 
+(setq c-basic-offset 4)
+
 (provide 'utilities)
