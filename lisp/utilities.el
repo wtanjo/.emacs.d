@@ -270,4 +270,10 @@ This function cannot handle correctly occasions where the cursor is on the last 
 
 (setq c-basic-offset 4)
 
+(setq grep-command "grep -rnH ")
+
+(with-eval-after-load 'dired-aux
+  (add-to-list 'dired-compress-files-alist '("\\.7z\\'" . "7z a %o %i"))
+  (add-to-list 'dired-compress-files-alist '("\\.tar\\.zst\\'" . "tar -cf - %i | zstd -qf -19 -o %o")))
+
 (provide 'utilities)
