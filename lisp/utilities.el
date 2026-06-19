@@ -1,7 +1,6 @@
 (keymap-global-set "C-z" nil)
 (keymap-global-set "C-c C-f" nil)
 (keymap-global-set "C-x s" #'save-buffer)
-(keymap-global-set "C-x C-f" #'find-file-at-point)
 (keymap-global-set "M-SPC" #'mark-word)
 
 (keymap-global-set "C-c c" #'compile)
