@@ -263,7 +263,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
     (if (file-remote-p dir)
         (message "Tramp-mode is currently not supported for opening externally.")
       (let ((default-directory dir))
-        (start-process "terminal" nil "st")))))
+        (call-process "st" nil 0 nil)))))
 
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "C-c o") #'wt/dired-st-open))
