@@ -253,8 +253,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
 
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 
-(keymap-global-set "M-s" #'pinyin-isearch-forward)
-(keymap-global-set "M-r" #'pinyin-isearch-backward)
+(keymap-global-set "C-c s" #'pinyin-isearch-forward)
+(keymap-global-set "C-c r" #'pinyin-isearch-backward)
 
 (defun wt/dired-st-open ()
   "Open the current directory in dired-mode with st."
