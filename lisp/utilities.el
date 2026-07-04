@@ -228,6 +228,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 
 (use-package cape
   :ensure t
@@ -269,6 +270,12 @@ This function cannot handle correctly occasions where the cursor is on the last 
   (define-key dired-mode-map (kbd "C-c o") #'wt/dired-st-open))
 
 (setq c-basic-offset 4)
+
+(setq sgml-basic-offset 4)
+(add-hook 'html-mode-hook
+          (lambda ()
+            (setq-local css-indent-offset 4)
+            (setq-local js-indent-level 4)))
 
 (setq grep-command "grep -rnH ")
 
