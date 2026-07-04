@@ -247,10 +247,12 @@ This function cannot handle correctly occasions where the cursor is on the last 
                               (add-to-list 'completion-at-point-functions #'cape-dabbrev)
                               (add-to-list 'completion-at-point-functions #'cape-file)
                               (add-to-list 'completion-at-point-functions #'tags-completion-at-point-function)))
-(add-hook 'tex-mode-hook (lambda ()
-                           (add-to-list 'completion-at-point-functions #'cape-tex)))
 (add-hook 'org-mode-hook (lambda ()
-                           (add-to-list 'completion-at-point-functions #'cape-tex)))
+                           (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+                           (add-to-list 'completion-at-point-functions #'cape-file)))
+(add-hook 'makefile-mode-hook (lambda ()
+                                (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+                                (add-to-list 'completion-at-point-functions #'cape-file)))
 
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 
