@@ -229,6 +229,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
 
 (use-package cape
   :ensure t
