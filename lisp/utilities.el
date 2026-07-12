@@ -230,6 +230,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
+(add-hook 'python-mode-hook (lambda () (python-ts-mode)))
 
 (use-package cape
   :ensure t
