@@ -288,4 +288,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
   (add-to-list 'dired-compress-files-alist '("\\.7z\\'" . "7z a %o %i"))
   (add-to-list 'dired-compress-files-alist '("\\.tar\\.zst\\'" . "tar -cf - %i | zstd -qf -19 -o %o")))
 
+(add-to-list 'auto-mode-alist '("\\.nasm\\'" . nasm-mode))
+(add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode))
+
 (provide 'utilities)
