@@ -91,7 +91,8 @@
 
 (use-package rainbow-delimiters
  :ensure t
- :hook (prog-mode . rainbow-delimiters-mode))
+ :hook (prog-mode . rainbow-delimiters-mode)
+ :hook (vala-mode . rainbow-delimiters-mode))
 
 ;; Customization of the original modeline
 (column-number-mode 1)
@@ -99,5 +100,7 @@
 (display-battery-mode 1)
 
 (setq dired-listing-switches "-alh")
+
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 (provide 'facade)
