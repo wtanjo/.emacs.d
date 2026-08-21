@@ -296,6 +296,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
   :custom
   (default-input-method "rime")
   (rime-share-data-dir "~/.local/share/fcitx5/rime")
-  (rime-show-candidate 'posframe))
+  (rime-show-candidate 'posframe)
+  :config
+  (add-hook 'kill-emacs-hook #'rime-lib-finalize))
 
 (provide 'utilities)
