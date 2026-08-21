@@ -298,6 +298,9 @@ This function cannot handle correctly occasions where the cursor is on the last 
   (rime-share-data-dir "~/.local/share/fcitx5/rime")
   (rime-show-candidate 'posframe)
   :config
-  (add-hook 'kill-emacs-hook #'rime-lib-finalize))
+  (add-hook 'kill-emacs-hook
+            (lambda ()
+              (when (fboundp 'rime-lib-finalize)
+                (rime-lib-finalize)))))
 
 (provide 'utilities)
