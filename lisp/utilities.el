@@ -294,8 +294,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (use-package rime
   :ensure t
   :custom
+  (default-input-method "rime")
   (rime-share-data-dir "~/.local/share/fcitx5/rime")
-  (rime-show-candidate 'posframe)
-  (default-input-method "rime"))
+  (rime-show-candidate 'posframe))
 
 (provide 'utilities)
