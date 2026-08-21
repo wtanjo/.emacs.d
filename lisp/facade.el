@@ -73,11 +73,13 @@
         ("opt" (dired "~/opt") "o")
         ("reservation" (dired "~/reservation") "r")
         ("tmp" (dired "~/tmp") "t"))
+       
        ("Reservation"
         ("DS" (dired "~/reservation/DS") "d")
         ("languages" (dired "~/reservation/languages") "l")
         ("programming" (dired "~/reservation/programming") "p")
-        ("wtanjo" (dired "~/reservation/wtanjo") "w"))
+        ("writing" (dired "~/reservation/wtanjo/U盘/汇贤——格致——复旦（渡边掸尘）/tanjo/写作") "w"))
+       
        ("Config"
         ("System Config" (dired "~/.config") "s")
         ("Emacs Config" (dired "~/.emacs.d") "e"))))))

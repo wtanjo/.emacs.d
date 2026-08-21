@@ -291,4 +291,11 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (add-to-list 'auto-mode-alist '("\\.nasm\\'" . nasm-mode))
 (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode))
 
+(use-package rime
+  :ensure t
+  :custom
+  (rime-share-data-dir "~/.local/share/fcitx5/rime")
+  (rime-show-candidate 'posframe)
+  (default-input-method "rime"))
+
 (provide 'utilities)
