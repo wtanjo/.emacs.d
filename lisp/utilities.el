@@ -68,54 +68,6 @@ This function cannot handle correctly occasions where the cursor is on the last 
   :config
   (editorconfig-mode 1))
 
-(with-eval-after-load 'project
-  (defun wt/abbreviate-project-name (name)
-    (if (< (length name) 12)
-        name
-      (let ((parts (split-string name "[-_ ]+" t)))
-        (if (> (length parts) 1)
-            (mapconcat (lambda (word) (substring word 0 1)) parts "-")
-          (concat (substring name 0 (min 4 (length name))) "...")))))
-
-  (defun wt/project-try-local (dir)
-    "Determine if DIR is a non-Git project."
-    (catch 'ret
-      (let ((pr-flags '((".project") ;; highest priority
-                        ("go.mod"
-                         "Cargo.toml"
-                         "pyproject.toml" "pyrightconfig.json" ".venv" "requirements.txt"
-                         "compile_flags.txt" "compile_commands.json" ".clangd")
-                        ("Makefile" "README.org" "README.md" ".editorconfig"))))
-        (dolist (current-level pr-flags)
-          (dolist (f current-level)
-            (when-let ((root (locate-dominating-file dir f)))
-              (throw 'ret (cons 'local root))))))))
-
-  (cl-defmethod project-name ((project (head vc)))
-    (wt/abbreviate-project-name (file-name-nondirectory (directory-file-name (nth 2 project)))))
-  (cl-defmethod project-name ((project (head local)))
-    (wt/abbreviate-project-name (file-name-nondirectory (directory-file-name (cdr project)))))
-
-  (cl-defmethod project-root ((project (head local)))
-    "Extract the root directory from a 'local' type project object."
-    (cdr project))
-
-  (setq project-find-functions '(wt/project-try-local project-try-vc))
-
-  (defun wt/project-files-in-directory (dir)
-    "Use `fd' to list files in DIR."
-    (let* ((default-directory dir)
-           (localdir (file-local-name (expand-file-name dir)))
-           (command (format "fd -H -t f -0 . %s" localdir)))
-      (project--remote-file-names
-       (sort (split-string (shell-command-to-string command) "\0" t)
-             #'string<))))
-
-  (cl-defmethod project-files ((project (head local)) &optional dirs)
-    "Override `project-files' to use `fd' in local projects."
-    (mapcan #'wt/project-files-in-directory
-            (or dirs (list (project-root project))))))
-
 (use-package multiple-cursors
   :ensure t
   :bind
