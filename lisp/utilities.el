@@ -1,10 +1,12 @@
 (keymap-global-set "C-z" nil)
-(keymap-global-set "C-c C-f" nil)
+(keymap-set emacs-lisp-mode-map "C-c C-f" nil)
 (keymap-global-set "C-x s" #'save-buffer)
 (keymap-global-set "M-SPC" #'mark-word)
 
 (keymap-global-set "C-c c" #'compile)
 (setq-default compile-command "")
+(keymap-set minibuffer-local-shell-command-map "C-p" #'previous-line-or-history-element)
+(keymap-set minibuffer-local-shell-command-map "C-n" #'next-line-or-history-element)
 
 (defun wt/duplicate-line (n)
   "duplicate-line and go next line"
