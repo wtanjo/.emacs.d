@@ -5,8 +5,6 @@
 
 (keymap-global-set "C-c c" #'compile)
 (setq-default compile-command "")
-(keymap-set minibuffer-local-shell-command-map "C-p" #'previous-line-or-history-element)
-(keymap-set minibuffer-local-shell-command-map "C-n" #'next-line-or-history-element)
 
 (defun wt/duplicate-line (n)
   "duplicate-line and go next line"
