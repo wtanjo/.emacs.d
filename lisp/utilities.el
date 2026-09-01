@@ -255,4 +255,9 @@ This function cannot handle correctly occasions where the cursor is on the last 
               (when (fboundp 'rime-lib-finalize)
                 (rime-lib-finalize)))))
 
+(use-package web-mode
+  :ensure t
+  :mode
+  (("\\.html?\\'" . web-mode)))
+
 (provide 'utilities)
