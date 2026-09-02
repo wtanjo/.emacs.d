@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+
 (keymap-global-set "C-z" nil)
 (keymap-set emacs-lisp-mode-map "C-c C-f" nil)
 (keymap-global-set "C-x s" #'save-buffer)
@@ -259,5 +261,28 @@ This function cannot handle correctly occasions where the cursor is on the last 
   :ensure t
   :mode
   (("\\.html?\\'" . web-mode)))
+
+(defun wt/clean-buffers ()
+  "Kill buffers whose visiting file has been deleted from the disk and the buffer is not modified."
+  (interactive)
+  (let ((count 0))
+    (dolist (buf (buffer-list))
+      (let ((fname (buffer-file-name buf)))
+        (when (not fname)
+          (save-current-buffer
+            (set-buffer buf)
+            (when (eq major-mode 'dired-mode)
+              (let ((dir dired-directory))
+                (when (stringp dir)
+                  (setq fname dir))))))
+
+        (when (and fname
+                   (not (file-remote-p fname))
+                   (not (file-exists-p fname))
+                   (not (buffer-modified-p buf)))
+          (kill-buffer buf)
+          (message "Cleaned buffer of file: %s" fname)
+          (setq count (1+ count)))))
+    (message "wt/clean-buffers finished: %d buffer(s) cleaned" count)))
 
 (provide 'utilities)

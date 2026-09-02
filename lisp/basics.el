@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+
 (global-auto-revert-mode t)
 (setq make-backup-files nil)
 (savehist-mode 1)

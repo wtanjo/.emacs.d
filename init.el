@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+
 ;; Adjust garbage collection threshold for early startup (see use of gcmh below)
 (setq gc-cons-threshold (* 128 1024 1024))
 
@@ -18,6 +20,8 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
+
+(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
 
 (require 'basics)
 (require 'facade)
