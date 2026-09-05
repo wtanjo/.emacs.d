@@ -228,6 +228,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "C-c o") #'wt/dired-st-open))
 
+(setq c-default-style '((java-mode . "java") (awk-mode . "awk") (other . "bsd")))
 (setq c-basic-offset 4)
 
 (setq sgml-basic-offset 4)
