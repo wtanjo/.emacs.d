@@ -10,7 +10,7 @@
 (setq display-line-numbers-type 'relative)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
-(add-hook 'dired-mode-hook (lambda () (setq truncate-lines nil)))
+(add-hook 'dired-mode-hook (lambda () (setq truncate-lines t)))
 (add-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'org-mode-hook #'visual-line-mode)
 (add-hook 'markdown-mode-hook #'visual-line-mode)
