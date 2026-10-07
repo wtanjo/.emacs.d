@@ -160,21 +160,6 @@ This function cannot handle correctly occasions where the cursor is on the last 
   (corfu-popupinfo-mode)
   (corfu-history-mode))
 
-(use-package openwith
-  :ensure t
-  :config
-  (setq openwith-associations '(("\\.pdf\\'" "zathura --fork" (file))
-                                ("\\.docx\\'" "libreoffice" (file))
-                                ("\\.doc\\'" "libreoffice" (file))
-                                ("\\.xlsx\\'" "libreoffice" (file))
-                                ("\\.pptx\\'" "libreoffice" (file))
-                                ("\\.mp4\\'" "mpv" (file))
-                                ("\\.mkv\\'" "mpv" (file))
-                                ("\\.mp3\\'" "deadbeef" (file))
-                                ("\\.ogg\\'" "deadbeef" (file))
-                                ("\\.ff\\'" "lel" (file)))))
-(add-hook 'dired-mode-hook (lambda () (openwith-mode t)))
-
 (setq org-latex-pdf-process
       '("latexmk -pdfxe -f -interaction=nonstopmode -output-directory=%o %f"))
 (add-hook 'org-mode-hook (lambda () (keymap-set org-mode-map "C-," #'wt/duplicate-line)))
@@ -260,8 +245,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
 
 (use-package web-mode
   :ensure t
-  :mode
-  (("\\.html?\\'" . web-mode)))
+  :mode ("\\.html\\'" "\\.css\\'"))
+(add-hook 'web-mode-hook #'emmet-mode)
 
 (defun wt/clean-buffers ()
   "Kill buffers whose visiting file has been deleted from the disk and the buffer is not modified."
@@ -285,5 +270,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
           (message "Cleaned buffer of file: %s" fname)
           (setq count (1+ count)))))
     (message "wt/clean-buffers finished: %d buffer(s) cleaned" count)))
+
+(setq eglot-code-action-indications nil)
 
 (provide 'utilities)
