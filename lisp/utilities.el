@@ -161,8 +161,9 @@ This function cannot handle correctly occasions where the cursor is on the last 
   (corfu-history-mode))
 
 (setq org-latex-pdf-process
-      '("latexmk -pdfxe -f -interaction=nonstopmode -output-directory=%o %f"))
-(add-hook 'org-mode-hook (lambda () (keymap-set org-mode-map "C-," #'wt/duplicate-line)))
+      '("latexmk -pdflatex -f -interaction=nonstopmode -output-directory=%o %f"))
+(with-eval-after-load 'org
+  (keymap-set org-mode-map "C-," #'wt/duplicate-line))
 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
@@ -209,9 +210,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
         (message "Tramp-mode is currently not supported for opening externally.")
       (let ((default-directory dir))
         (call-process "st" nil 0 nil)))))
-
 (with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "C-c o") #'wt/dired-st-open))
+  (keymap-set dired-mode-map "C-c o" #'wt/dired-st-open))
 
 (setq c-default-style '((java-mode . "java") (awk-mode . "awk") (other . "bsd")))
 (setq c-basic-offset 4)
@@ -272,5 +272,26 @@ This function cannot handle correctly occasions where the cursor is on the last 
     (message "wt/clean-buffers finished: %d buffer(s) cleaned" count)))
 
 (setq eglot-code-action-indications nil)
+
+(setq dired-guess-shell-alist-user
+      '(("\\.pdf\\'" "zathura --fork")
+        ("\\.md\\'" "firefox")
+        ("\\.mp3\\'" "deadbeef")
+        ("\\.ogg\\'" "deadbeef")
+        ("\\.ff\\'" "lel")
+        ("\\.png\\'" "nsxiv")
+        ("\\.jpg\\'" "nsxiv")
+        ("\\.jpeg\\'" "nsxiv")
+        ("\\.bmp\\'" "nsxiv")
+        ("\\.ppm\\'" "nsxiv")))
+
+(defun wt/latex-insert-math ()
+  "insert \\(\\) and cursor goes into the bracket"
+  (interactive)
+  (insert "\\(")
+  (insert "\\)")
+  (backward-char 2))
+(with-eval-after-load 'latex
+  (keymap-set LaTeX-mode-map "M-m" #'wt/latex-insert-math))
 
 (provide 'utilities)
