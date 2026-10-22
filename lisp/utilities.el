@@ -179,7 +179,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'tags-completion-at-point-function)
-  
+  (setq dabbrev-case-fold-search nil)
   (setq dabbrev-check-all-buffers t
         dabbrev-check-other-buffers t))
 (add-hook 'octave-mode-hook (lambda ()
