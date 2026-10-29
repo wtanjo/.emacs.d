@@ -294,4 +294,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (with-eval-after-load 'latex
   (keymap-set LaTeX-mode-map "M-m" #'wt/latex-insert-math))
 
+(with-eval-after-load 'compile
+  (keymap-set compilation-mode-map "C-c k" #'kill-compilation))
+
 (provide 'utilities)
