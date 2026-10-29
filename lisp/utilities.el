@@ -297,4 +297,8 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (with-eval-after-load 'compile
   (keymap-set compilation-mode-map "C-c k" #'kill-compilation))
 
+(setq treesit-language-source-alist
+      '((hare "https://git.sr.ht/~ecs/tree-sitter-hare")))
+(require 'hare-ts-mode)
+
 (provide 'utilities)
