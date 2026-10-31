@@ -213,8 +213,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 (with-eval-after-load 'dired
   (keymap-set dired-mode-map "C-c o" #'wt/dired-st-open))
 
-(setq c-default-style '((java-mode . "java") (awk-mode . "awk") (other . "bsd")))
-(setq c-basic-offset 4)
+(setq c-default-style '((java-mode . "java") (awk-mode . "awk") (other . "stroustrup")))
 
 (setq sgml-basic-offset 4)
 (add-hook 'html-mode-hook
