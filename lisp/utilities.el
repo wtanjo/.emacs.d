@@ -197,8 +197,6 @@ This function cannot handle correctly occasions where the cursor is on the last 
                                 (add-to-list 'completion-at-point-functions #'cape-dabbrev)
                                 (add-to-list 'completion-at-point-functions #'cape-file)))
 
-(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
-
 (keymap-global-set "C-c s" #'pinyin-isearch-forward)
 (keymap-global-set "C-c r" #'pinyin-isearch-backward)
 
@@ -295,5 +293,7 @@ This function cannot handle correctly occasions where the cursor is on the last 
 
 (with-eval-after-load 'compile
   (keymap-set compilation-mode-map "C-c k" #'kill-compilation))
+
+(add-to-list 'auto-mode-alist '("\\.cu[h]?\\'" . c++-mode))
 
 (provide 'utilities)

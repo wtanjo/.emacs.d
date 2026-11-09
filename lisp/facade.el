@@ -110,4 +110,10 @@
 
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
+(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
+(add-hook 'go-ts-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq-local tab-width 8)))
+
 (provide 'facade)
