@@ -344,4 +344,6 @@ This function cannot handle correctly occasions where the cursor is on the last 
 
 (add-to-list 'auto-mode-alist '("\\.cu[h]?\\'" . c++-mode))
 
+(setq image-use-external-converter t)
+
 (provide 'utilities)

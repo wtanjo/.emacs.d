@@ -5,6 +5,7 @@
 (set-fontset-font t 'han (font-spec :family "LXGW WenKai Mono" :size 28))
 (set-fontset-font t 'cjk-misc (font-spec :family "LXGW WenKai Mono" :size 28))
 (set-fontset-font t 'kana (font-spec :family "Sarasa" :size 28))
+(set-fontset-font t 'arabic (font-spec :family "Simplified Arabic" :size 28))
 
 (use-package gruber-darker-theme
   :ensure t
